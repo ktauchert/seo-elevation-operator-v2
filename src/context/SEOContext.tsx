@@ -61,11 +61,12 @@ const SEOProvider = (props: PropsWithChildren) => {
   const [seoAnalysis, setSEOAnalysis] = React.useState<string>("");
   const [seoScoring, setSEOScoring] = React.useState<SEOScoring | null>(null);
 
-  const { userData, creditsData } = useAuth();
+  const { userData, creditsData, setNewCredits } = useAuth();
   const { data: session } = useSession();
 
+
   useEffect(() => {
-    if (creditsData?.credits === creditsData?.maxCredits) {
+    if (creditsData?.credits === 0) {
       setAllowed(false);
     } else {
       setAllowed(true);
@@ -179,6 +180,9 @@ const SEOProvider = (props: PropsWithChildren) => {
     if (success) {
       updateProgress(6);
       setMessage("SEO Result has been saved.");
+      const newCredits = (creditsData?.credits ?? 0) - 1;
+      setNewCredits(newCredits);
+      setElevating(false);
     } else {
       setMessage("Failed to save SEO Result, please try again.");
     }

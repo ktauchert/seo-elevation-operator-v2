@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { CreditsData } from "../../../../../auth_types";
 
 export async function POST(req: NextRequest) {
-  const { newCredit } = await req.json();
+  const { newCredits } = await req.json();
 
   const userId = await validateTokenAndGetUserId(req);
 
@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
   }
 
   const creditsData: Partial<CreditsData> = {
-    credits: newCredit,
+    credits: newCredits,
     updatedAt: admin.firestore.FieldValue.serverTimestamp(),
   };
   try {

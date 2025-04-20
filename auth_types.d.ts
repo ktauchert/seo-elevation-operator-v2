@@ -12,6 +12,7 @@ export interface UserData {
   email: string | null;
   image: string | null;
   displayName: string | null;
+  role: "admin" | "user" | null;
   firstName: string;
   lastName: string;
   lastLogin: FieldValue;
@@ -22,6 +23,15 @@ export interface AuthContextProps {
   userData: UserData | null;
   creditsData: CreditsData | null;
   loginError: string | null;
+  setNewCredits: (credits: number) => void;
+  checkAccessStatus: (
+    email: string
+  ) => Promise<"unknown" | "pending" | "approved" | "denied">;
+  requestAccess: (
+    email: string,
+    displayName: string
+  ) => Promise<"pending" | "approved" | "denied">;
+  requestAccess;
 }
 
 export interface CreditsData {

@@ -7,39 +7,44 @@ import React from "react";
 
 const MobileBottomNav = () => {
   const { status } = useSession();
+  const { userData } = useAuth();
   const pathname = usePathname();
 
   return (
-      <div className="w-full flex flex-row justify-between text-xl text-slate-100 ">
-        {status === "authenticated" ? (
-          <>
-            <Link className="mobile-link-button" href="/">
-              Home
+    <div className="w-full flex flex-row justify-between text-xl text-slate-100 ">
+      {status === "authenticated" ? (
+        <>
+          <Link className="mobile-link-button" href="/">
+            Home
+          </Link>
+          <Link
+            className="mobile-link-button"
+            href={
+              pathname === "/elevation" ? "/elevation/analyze" : "/elevation"
+            }
+          >
+            {pathname === "/elevation" ? "New Elevation" : "Elevation"}
+          </Link>
+          <Link className="mobile-link-button" href="/user">
+            {pathname === "/user" ? "Settings" : "User"}
+          </Link>
+          {userData?.role === "admin" && (
+            <Link className="mobile-link-button" href="/admin">
+              Admin
             </Link>
-            <Link
-              className="mobile-link-button"
-              href={
-                pathname === "/elevation" ? "/elevation/analyze" : "/elevation"
-              }
-            >
-              {pathname === "/elevation" ? "New Elevation" : "Elevation"}
-            </Link>
-            <Link className="mobile-link-button" href="/user">
-              {pathname === "/user" ? "Settings" : "User"}
-            </Link>
-          </>
-        ) : (
-          <>
-            <Link className="mobile-link-button" href="/">
-              Home
-            </Link>
-            <Link className="mobile-link-button" href="/auth/login">
-              Login
-            </Link>
-          </>
-        )}
-      </div>
-    
+          )}
+        </>
+      ) : (
+        <>
+          <Link className="mobile-link-button" href="/">
+            Home
+          </Link>
+          <Link className="mobile-link-button" href="/auth/login">
+            Login
+          </Link>
+        </>
+      )}
+    </div>
   );
 };
 

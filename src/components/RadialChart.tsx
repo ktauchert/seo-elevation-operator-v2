@@ -38,6 +38,24 @@ interface Options {
       angleLines: { display: boolean };
       suggestedMin: number;
       suggestedMax: number;
+      pointLabels: {
+        color: string; // Set the radial axis labels to white
+        font: {
+          size: number; // Optional: Adjust font size
+          family: string; // Optional: Set font family
+        };
+      };
+    };
+  };
+  plugins: {
+    legend: {
+      labels: {
+        font: {
+          size: number; // Optional: Adjust font size for legend labels
+          family: string; // Optional: Set font family for legend labels
+        };
+        color: string; // Set legend text color to white
+      };
     };
   };
 }
@@ -68,16 +86,37 @@ const options = {
       angleLines: { display: false },
       suggestedMin: 0,
       suggestedMax: 10,
+      pointLabels: {
+        color: "white", // Set the radial axis labels to white
+        font: {
+          size: 14, // Optional: Adjust font size
+          family: "Arial", // Optional: Set font family
+        },
+      },
+    },
+  },
+  plugins: {
+    legend: {
+      labels: {
+        font: {
+          size: 16, // Optional: Adjust font size for legend labels
+          family: "Arial", // Optional: Set font family for legend labels
+        },
+        color: "white", // Set legend text color to white
+      },
     },
   },
 };
 
-const RadialChart = ({scoring}: Props) => {
+const RadialChart = ({ scoring }: Props) => {
   const [preparedData] = React.useMemo(() => {
-    const labels = Object.keys(scoring).map(
-      (key) => scoringMap[key as keyof typeof scoringMap]
-    );
-    const data = Object.values(scoring).map((value) => value);
+    const labels = Object.keys(scoring)
+      .filter((key) => key !== "overallScore") // Exclude overallScore
+      .map((key) => scoringMap[key as keyof typeof scoringMap]);
+
+    const data = Object.entries(scoring)
+      .filter(([key]) => key !== "overallScore") // Exclude overallScore
+      .map(([, value]) => value);
 
     const preparedData: Data = {
       labels,

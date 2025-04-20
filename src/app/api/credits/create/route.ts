@@ -17,8 +17,8 @@ export async function POST(req: NextRequest) {
   }
 
   const initialCreditsData: CreditsData = {
-    credits: 0,
-    maxCredits: 5,
+    credits: 5,
+    maxCredits: 20,
     updatedAt: admin.firestore.FieldValue.serverTimestamp(),
   };
   try {

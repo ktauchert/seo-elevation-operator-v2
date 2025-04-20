@@ -29,7 +29,14 @@ export interface SEOScoring {
   overallScore: number;
 }
 
-
+export interface ElevationResultData {
+  id: string;
+  url: string;
+  overallScore: number;
+  updatedAt: Date;
+  result: string;
+  scoring: SEOScoring;
+}
 
 // getData response
 export interface GetDataResponse {
@@ -37,5 +44,3 @@ export interface GetDataResponse {
   message: string;
   success: boolean;
 }
-
-

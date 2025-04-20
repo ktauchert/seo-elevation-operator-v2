@@ -1,47 +1,49 @@
-import admin from "@/config/firebaseAdminConfig";
 import { NextRequest, NextResponse } from "next/server";
-import { UserData } from "../../../../../auth_types";
+import { db } from "@/config/firebaseClientConfig";
+import { doc, setDoc } from "firebase/firestore";
 
-export interface CreateResponse {
-  message?: string;
-  userData?: UserData;
-  error?: string;
-}
-
-export async function POST(req: NextRequest) {
-  const { session_user } = await req.json();
-  if (!session_user) {
-    return NextResponse.json(
-      { error: "Session User is required." },
-      { status: 400 }
-    );
-  }
-
-  const initialUserData = {
-    email: session_user.email,
-    image: session_user.image ?? "",
-    displayName: session_user.name,
-    firstName: session_user.name.split(" ")[0],
-    lastName: session_user.name.split(" ")[1],
-    lastLogin: admin.firestore.FieldValue.serverTimestamp(),
-    updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-  };
-
-  const userDocRef = admin
-    .firestore()
-    .collection("users")
-    .doc(session_user.id)
-    .collection("user")
-    .doc("data");
-
-  // set initial userdata into ref
+export async function POST(request: NextRequest) {
   try {
-    await userDocRef.set(initialUserData, { merge: true });
-    return NextResponse.json(initialUserData, { status: 200 });
+    const body = await request.json();
+
+    if (!body.session_user || !body.session_user.id) {
+      return NextResponse.json(
+        { error: "Missing session_user or user ID" },
+        { status: 400 }
+      );
+    }
+
+    const { session_user } = body;
+
+    // Normalize names
+    const nameParts = session_user.name?.split(" ") || ["", ""];
+    const firstName = nameParts[0] || "";
+    const lastName = nameParts.slice(1).join(" ") || "";
+
+    const userData = {
+      email: session_user.email,
+      image: session_user.image || "",
+      displayName: session_user.name || "",
+      firstName,
+      lastName,
+      role: "user",
+      createdAt: new Date().toISOString(),
+      lastLoginAt: new Date().toISOString(),
+    };
+
+    console.log("Creating user:", session_user.id, userData);
+
+    // Use setDoc to create or update the user document
+    await setDoc(doc(db, "users", session_user.id), userData);
+
+    return NextResponse.json(userData);
   } catch (error) {
-    console.error("Error setting user data", error);
+    console.error("Error creating user:", error);
     return NextResponse.json(
-      { error: "Error setting user data." },
+      {
+        error: "Failed to create user",
+        details: error instanceof Error ? error.message : String(error),
+      },
       { status: 500 }
     );
   }

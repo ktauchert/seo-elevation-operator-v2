@@ -1,3 +1,4 @@
+import ProtectedRoute from "@/components/ProtectedRoute";
 import React, { PropsWithChildren } from "react";
 
 type Props = {};
@@ -5,7 +6,7 @@ type Props = {};
 const ElevationLayout = (props: PropsWithChildren) => {
   return (
     <div id="elevation" className="w-full h-full flex flex-col items-center">
-      {props.children}
+      <ProtectedRoute>{props.children}</ProtectedRoute>
     </div>
   );
 };

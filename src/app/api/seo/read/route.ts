@@ -26,6 +26,7 @@ export async function POST(req: NextRequest) {
         .collection("users")
         .doc(user_uid)
         .collection("results")
+        .orderBy("updatedAt", "desc")
         .get();
       const results = allResults.docs.map((doc) => ({
         id: doc.id,
@@ -42,6 +43,7 @@ export async function POST(req: NextRequest) {
         .collection("users")
         .doc(user_uid)
         .collection("results")
+        .orderBy("updatedAt", "desc")
         .where(searchKey, "==", searchWord)
         .get();
       const results = searchResults.docs.map((doc) => ({

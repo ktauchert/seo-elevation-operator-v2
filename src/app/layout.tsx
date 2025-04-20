@@ -14,6 +14,7 @@ import { SessionProvider } from "next-auth/react";
 import SessionWrapper from "@/components/layout/SessionWrapper";
 import MobileBottomNav from "@/components/layout/MobileBottomNav";
 import SEOProvider from "@/context/SEOContext";
+import CreditsInfo from "@/components/CreditsInfo";
 
 const SUSESans = localFont({
   src: "./fonts/SUSE-VariableFont_wght.ttf",
@@ -64,7 +65,7 @@ export default function RootLayout({
           <AuthContextProvider>
             <SEOProvider>
               <ParticlesComponent />
-              <div className="flex h-screen flex-col relative w-screen">
+              <div className="flex h-screen flex-col relative w-screen relative">
                 {/* Header */}
 
                 <div className="flex flex-1 overflow-hidden">
@@ -85,7 +86,9 @@ export default function RootLayout({
                   <div className="h-96 bg-gray-300 my-4"></div> */}
                   </main>
                 </div>
-
+                {/* <div className="absolute bottom-4 right-4">
+                  <CreditsInfo />
+                </div> */}
                 {/* Mobile Navigation */}
                 <nav className="sticky bottom-0 left-0 w-full py-1 flex justify-around md:hidden">
                   <MobileBottomNav />
