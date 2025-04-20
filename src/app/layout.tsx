@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import ParticlesComponent from "../components/background/Particles";
+import ParticlesComponent from "@/components/background/particles";
 
 import "./globals.scss";
 import CookieBanner from "@/components/utils/CookieBanner";
