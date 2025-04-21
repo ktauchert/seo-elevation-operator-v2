@@ -10,13 +10,13 @@ import {
   SortingState,
   flexRender,
 } from "@tanstack/react-table";
-import Button from "./Button";
 import Link from "next/link";
+import { FirestoreDateValue, formatFirestoreDateWithTime } from "@/helper/firestore-date";
 
-type Elevation = {
+export type Elevation = {
   id: string;
   url: string;
-  updatedAt: string | { _seconds: number; _nanoseconds: number };
+  updatedAt: FirestoreDateValue;
   result: string;
   overallScore: number;
 };
@@ -52,54 +52,36 @@ const DataTable = ({ data }: Props) => {
         accessorKey: "updatedAt",
         header: "Last Updated",
         cell: ({ row }) => {
-          // For display purposes, format the date nicely
-          let dateValue = row.original.updatedAt;
-          let formattedDate;
-          
-          // Check if it's already a string (pre-formatted)
-          if (typeof dateValue === 'string') {
-            formattedDate = dateValue;
-          } 
-          // Check if it's a Firestore timestamp object
-          else if (dateValue && dateValue._seconds) {
-            const date = new Date(
-              dateValue._seconds * 1000 + 
-              (dateValue._nanoseconds || 0) / 1e6
-            );
-            formattedDate = date.toLocaleString('de-DE', {
-              day: '2-digit',
-              month: '2-digit',
-              year: 'numeric',
-              hour: '2-digit',
-              minute: '2-digit'
-            });
-          } 
-          // Otherwise, assume it's a Date object
-          else {
-            formattedDate = new Date(dateValue).toLocaleString('de-DE');
-          }
-          
-          return <span>{formattedDate}</span>;
+          // Use the helper function to format the date
+          return <span>{formatFirestoreDateWithTime(row.original.updatedAt)}</span>;
         },
         // Custom sorting function
         sortingFn: (rowA, rowB) => {
-          let dateA = rowA.original.updatedAt;
-          let dateB = rowB.original.updatedAt;
+          const getTimestamp = (value: FirestoreDateValue): number => {
+            // Handle string dates
+            if (typeof value === 'string') {
+              return new Date(value).getTime();
+            }
+            
+            // Handle Firestore Timestamp objects from client SDK
+            if (value && typeof value === 'object' && '_seconds' in value) {
+              return value._seconds * 1000 + (value._nanoseconds || 0) / 1e6;
+            }
+            
+            // Handle Firestore Timestamp objects from admin SDK
+            if (value && typeof value === 'object' && 'seconds' in value && 'nanoseconds' in value) {
+              return value.seconds * 1000 + (value.nanoseconds || 0) / 1e6;
+            }
+            
+            // Handle JavaScript Date objects
+            if (value instanceof Date) {
+              return value.getTime();
+            }
+            
+            return 0; // Default for undefined, null, or FieldValue
+          };
           
-          // Convert string dates to timestamps for sorting
-          if (typeof dateA === 'string') {
-            dateA = new Date(dateA).getTime();
-          } else if (dateA && dateA._seconds) {
-            dateA = dateA._seconds * 1000 + (dateA._nanoseconds || 0) / 1e6;
-          }
-          
-          if (typeof dateB === 'string') {
-            dateB = new Date(dateB).getTime();
-          } else if (dateB && dateB._seconds) {
-            dateB = dateB._seconds * 1000 + (dateB._nanoseconds || 0) / 1e6;
-          }
-          
-          return dateA - dateB;
+          return getTimestamp(rowA.original.updatedAt) - getTimestamp(rowB.original.updatedAt);
         }
       },
       {

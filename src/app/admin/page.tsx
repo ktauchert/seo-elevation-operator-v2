@@ -4,29 +4,30 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import { db } from "@/config/firebaseClientConfig";
 import Link from "next/link";
-import {
-  collection,
-  query,
-  where,
-  orderBy,
-  getDocs,
-  getCountFromServer,
-} from "firebase/firestore";
+
 import {
   IoPersonAdd,
   IoStatsChart,
   IoAnalytics,
   IoSettings,
 } from "react-icons/io5";
+import formatFirestoreDate from "@/helper/firestore-date";
 
 export default function AdminDashboard() {
+  interface AccessRequest {
+    id: string;
+    displayName: string | null;
+    email: string;
+    requestedAt: string;
+    status: "approved" | "denied" | "pending";
+  }
+
   const [stats, setStats] = useState({
     pendingAccessRequests: 0,
     totalUsers: 0,
     totalElevations: 0,
-    recentAccessRequests: [] as any[],
+    recentAccessRequests: [] as AccessRequest[],
   });
   const [isLoading, setIsLoading] = useState(true);
 
@@ -89,19 +90,7 @@ export default function AdminDashboard() {
     }
   };
 
-  // Format Firestore timestamp
-  const formatFirestoreDate = (dateValue: any) => {
-    if (typeof dateValue === "string") {
-      return new Date(dateValue).toLocaleDateString("de-DE");
-    } else if (dateValue && dateValue.seconds) {
-      const date = new Date(
-        dateValue.seconds * 1000 + (dateValue.nanoseconds || 0) / 1e6
-      );
-      return date.toLocaleDateString("de-DE");
-    } else {
-      return "Unknown";
-    }
-  };
+
 
   return (
     <div className="p-6 w-full text-white">

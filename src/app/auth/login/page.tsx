@@ -17,7 +17,7 @@ export default function LoginPage() {
   const [isCheckingAccess, setIsCheckingAccess] = useState(false);
 
   const { data: session } = useSession();
-  const { userData, checkAccessStatus, requestAccess } = useAuth();
+  const { checkAccessStatus, requestAccess } = useAuth();
 
   // Check user access status when session changes
   useEffect(() => {
@@ -83,6 +83,8 @@ export default function LoginPage() {
         setError(null);
       }
     } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const _ = error;
       setError("An unexpected error occurred. Please try again.");
     }
   };
@@ -154,7 +156,7 @@ export default function LoginPage() {
               </div>
               <p className="text-lg mb-4">Hello, {session.user?.name}</p>
               <p className="text-base mb-6 text-center">
-                Your access request is being reviewed by our team. You'll
+                Your access request is being reviewed by our team. You&apos;ll
                 receive an email when your access is approved.
               </p>
               <button

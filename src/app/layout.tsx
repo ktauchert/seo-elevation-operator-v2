@@ -9,12 +9,9 @@ import { Suspense } from "react";
 import GoogleAnalytics from "@/components/background/GoogleAnalytics";
 import TopNavBar from "@/components/layout/TopNavBar";
 import LeftSideBar from "@/components/layout/LeftSideBar";
-import Footer from "@/components/landing/Footer";
-import { SessionProvider } from "next-auth/react";
 import SessionWrapper from "@/components/layout/SessionWrapper";
 import MobileBottomNav from "@/components/layout/MobileBottomNav";
 import SEOProvider from "@/context/SEOContext";
-import CreditsInfo from "@/components/CreditsInfo";
 
 const SUSESans = localFont({
   src: "./fonts/SUSE-VariableFont_wght.ttf",
@@ -102,23 +99,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-const hallo = `<div className="w-full flex h-svh max-h-svh">
-              {/* Left Sidebar */}
-              <LeftSideBar />
-              <div className="flex h-full flex-1 flex-col">
-                <div className="flex h-full flex-col justify-start overflow-y-scroll scrollbar-thin">
-                  {/* Top Nav Bar */}
-                  <TopNavBar />
-
-                  {/* Main Content */}
-                  <div className=" relative  flex-1 ">{children}</div>
-
-                  {/* Footer */}
-                  <Footer />
-                </div>
-                {/* Mobile Bottom */}
-                <MobileBottomNav />
-              </div>
-              {/* Right Sidebar - if needed */}
-            </div>`;

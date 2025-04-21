@@ -5,29 +5,14 @@ import { useAuth } from "@/context/AuthContext";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { toast } from "react-hot-toast";
-import { db } from "@/config/firebaseClientConfig";
-import {
-  collection,
-  query,
-  where,
-  orderBy,
-  getDocs,
-  doc,
-  serverTimestamp,
-  updateDoc,
-} from "firebase/firestore";
+import formatFirestoreDate, { FirestoreDateValue } from "@/helper/firestore-date";
 
 type AccessRequest = {
   id: string;
   email: string;
   displayName: string;
-  requestedAt: any; // Firestore timestamp
+  requestedAt: FirestoreDateValue;
   status: "pending" | "approved" | "denied";
-  ipAddress?: string;
-  userAgent?: string;
-  reason?: string;
-  reviewedBy?: string;
-  reviewedAt?: any; // Firestore timestamp
 };
 
 export default function AccessManagement() {
@@ -245,11 +230,8 @@ export default function AccessManagement() {
                           {request.email}
                         </td>
                         <td className="p-3 border-b border-cyan-800/20">
-                          {request.requestedAt
-                            ? new Date(
-                                request.requestedAt.seconds * 1000
-                              ).toLocaleDateString("de-DE")
-                            : "Unknown"}
+                          {formatFirestoreDate(
+                            request.requestedAt)}
                         </td>
                         <td className="p-3 border-b border-cyan-800/20">
                           <span

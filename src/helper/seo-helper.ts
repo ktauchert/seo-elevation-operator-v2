@@ -1,5 +1,4 @@
-import { db } from "@/config/firebaseClientConfig";
-import { doc, collection, serverTimestamp, setDoc } from "firebase/firestore";
+
 import { Extraction, SEOScoring } from "../../seo_types";
 import {
   seoPrompt,

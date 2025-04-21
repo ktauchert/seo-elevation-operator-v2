@@ -3,14 +3,8 @@ import React from "react";
 import Carousel from "../custom/Carousel";
 import testimonials from "@/helper/testimonials-data";
 
-const Testimonials = (props) => {
-  var settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
+const Testimonials = () => {
+
   return (
     <section id="testimonials" className="h-full flex flex-col px-5 md:px-0">
       <h2 className="flex text-4xl md:text-6xl items-center justify-center font-bold text-slate-100 mt-20 mb-10 w-full relative">

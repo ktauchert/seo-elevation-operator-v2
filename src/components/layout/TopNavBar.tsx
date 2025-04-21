@@ -1,9 +1,7 @@
 "use client";
-import { useAuth } from "@/context/AuthContext";
 import { IoLogOutOutline } from "react-icons/io5";
 import React from "react";
 import { signOut, useSession } from "next-auth/react";
-import { usePathname } from "next/navigation";
 import usePageTitle from "@/hooks/usePageTitle";
 
 const TopNavBar = () => {

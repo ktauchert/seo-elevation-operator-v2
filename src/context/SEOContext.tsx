@@ -9,8 +9,9 @@ import {
   getSEOScoring,
   saveSEOResult,
 } from "@/helper/seo-helper";
-import { SEOScoring } from "../../seo_types";
+import { ElevationResultData, SEOScoring } from "../../seo_types";
 import { useSession } from "next-auth/react";
+import { Elevation } from "@/components/DataTable";
 
 // Define the shape of the context value
 interface SEOContextType {
@@ -23,12 +24,13 @@ interface SEOContextType {
   language: "en" | "de";
   seoAnalysis: string;
   seoScoring: SEOScoring | null;
+  setLanguage: (lang: "en" | "de") => void;
   updateProgress: (value: number) => void;
   startAnalysis: (url: string) => Promise<void>;
   getElevations: (
     type?: string,
     searchFilter?: { searchKey: string; searchWord: string }
-  ) => Promise<any>;
+  ) => Promise<{id:string, elevation: ElevationResultData}[] | null>;
 }
 
 // Define the progress messages and steps
@@ -61,7 +63,7 @@ const SEOProvider = (props: PropsWithChildren) => {
   const [seoAnalysis, setSEOAnalysis] = React.useState<string>("");
   const [seoScoring, setSEOScoring] = React.useState<SEOScoring | null>(null);
 
-  const { userData, creditsData, setNewCredits } = useAuth();
+  const { creditsData, setNewCredits } = useAuth();
   const { data: session } = useSession();
 
 
@@ -83,10 +85,10 @@ const SEOProvider = (props: PropsWithChildren) => {
     searchFilter?: { searchKey: string; searchWord: string }
   ) => {
     type = type || "all";
-    if (!session) return;
+    if (!session) return null;
 
     const user_uid = session?.user?.id;
-    if (!user_uid) return;
+    if (!user_uid) return null;
 
     const res = await fetch("/api/seo/read", {
       method: "POST",
@@ -106,8 +108,7 @@ const SEOProvider = (props: PropsWithChildren) => {
     const data = await res.json();
     if (!data) return null;
     if (data.results) {
-      return data.results.map((elevation: any) => ({
-        id: elevation.id,
+      return data.results.map((elevation: Elevation) => ({
         ...elevation,
       }));
     }
@@ -198,6 +199,7 @@ const SEOProvider = (props: PropsWithChildren) => {
         progressMessage,
         url,
         language,
+        setLanguage,
         seoAnalysis,
         seoScoring,
         updateProgress,

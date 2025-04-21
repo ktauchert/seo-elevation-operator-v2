@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import puppeteer from "puppeteer-core"; // ONLY puppeteer-core in production
 import chromium from "@sparticuz/chromium";
+import * as puppeteerFull from "puppeteer"; 
 
 export const maxDuration = 15;
 
@@ -16,7 +17,6 @@ export async function POST(req: NextRequest) {
 
     if (process.env.NODE_ENV === "development") {
       // For local development, puppeteer (full) is okay
-      const puppeteerFull = require("puppeteer"); // Import puppeteer locally
       browser = await puppeteerFull.launch({
         args: ["--no-sandbox", "--disable-setuid-sandbox"],
         headless: true, // or false if you want to see the browser

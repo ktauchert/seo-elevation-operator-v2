@@ -1,6 +1,5 @@
 import Link from "next/link";
 import React from "react";
-import { IoArrowBackSharp } from "react-icons/io5";
 
 type Props = {
   href: string;

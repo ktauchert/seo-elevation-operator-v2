@@ -1,6 +1,5 @@
 import { validateTokenAndGetUserId } from "@/components/utils/auth-utils";
 import admin from "@/config/firebaseAdminConfig";
-import { messaging } from "firebase-admin";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {

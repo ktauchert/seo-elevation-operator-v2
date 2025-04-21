@@ -13,18 +13,7 @@ import {
   IoCheckmarkCircle,
 } from "react-icons/io5";
 import { toast } from "react-hot-toast";
-import { db } from "@/config/firebaseClientConfig";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  doc,
-  getDoc,
-  updateDoc,
-  serverTimestamp,
-  deleteDoc,
-} from "firebase/firestore";
+import formatFirestoreDate from "@/helper/firestore-date";
 
 type User = {
   id: string;
@@ -429,22 +418,6 @@ export default function UsersManagementPage() {
     } catch (error) {
       console.error("Error denying user:", error);
       toast.error("Failed to deny user");
-    }
-  };
-
-  // Format Firestore timestamp
-  const formatFirestoreDate = (dateValue: any) => {
-    if (!dateValue) return "Never";
-
-    if (typeof dateValue === "string") {
-      return new Date(dateValue).toLocaleDateString("de-DE");
-    } else if (dateValue && dateValue.seconds) {
-      const date = new Date(
-        dateValue.seconds * 1000 + (dateValue.nanoseconds || 0) / 1e6
-      );
-      return date.toLocaleDateString("de-DE");
-    } else {
-      return "Unknown";
     }
   };
 

@@ -12,7 +12,6 @@ import {
   User,
   CreditsData,
 } from "../../auth_types";
-import { useRouter } from "next/navigation";
 
 import { useSession } from "next-auth/react";
 import { db } from "@/config/firebaseClientConfig";
@@ -32,7 +31,6 @@ const AuthContextProvider = (props: PropsWithChildren) => {
   const [creditsData, setCreditsData] = useState<CreditsData | null>(null);
   const [loginError, setLoginError] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
-  const router = useRouter();
 
   const { data: session, status } = useSession();
 

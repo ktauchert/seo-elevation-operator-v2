@@ -1,3 +1,4 @@
+import { FieldValue, Timestamp } from "firebase-admin/firestore";
 export interface Extraction {
   title: string;
   metaDescription?: string;
@@ -44,3 +45,26 @@ export interface GetDataResponse {
   message: string;
   success: boolean;
 }
+
+
+// This file helps clarify the types for server-side Firebase Admin operations
+
+
+
+// For when writing to Firestore (can be a server timestamp)
+export type WriteTimestamp = FieldValue | Timestamp | Date | null;
+
+// For when reading from Firestore (will be a Timestamp)
+export type ReadTimestamp = Timestamp | null;
+
+// Common Firestore document with timestamps
+export interface FirestoreDocumentWithTimestamps {
+  createdAt?: WriteTimestamp | ReadTimestamp;
+  updatedAt?: WriteTimestamp | ReadTimestamp;
+}
+
+// For API responses that convert Firestore timestamps to serializable format
+export type SerializedTimestamp = {
+  _seconds: number;
+  _nanoseconds: number;
+};

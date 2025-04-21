@@ -62,6 +62,8 @@ export const authOptions: NextAuthOptions = {
             };
           }
         } catch (error) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const _ = error;
           throw new Error("Invalid credentials");
         }
       },
@@ -69,7 +71,7 @@ export const authOptions: NextAuthOptions = {
   ],
   session: { strategy: "jwt", maxAge: MAX_AGE },
   callbacks: {
-    async session({ session, token, user }) {
+    async session({ session, token  }) {
       if (token.sub) {
         session.user.id = token.sub;
       }

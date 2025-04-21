@@ -1,5 +1,4 @@
 import admin from "firebase-admin";
-import { getApps } from "firebase-admin/app";
 
 if (!admin.apps.length) {
   admin.initializeApp({

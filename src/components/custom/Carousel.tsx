@@ -4,7 +4,6 @@ import {
   IoChevronBackCircleOutline,
   IoChevronForwardCircleOutline,
 } from "react-icons/io5";
-import { IoChevronForwardOutline } from "react-icons/io5";
 
 import "./carousel.scss"; // Add your CSS styles here
 

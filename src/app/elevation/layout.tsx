@@ -1,7 +1,6 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
 import React, { PropsWithChildren } from "react";
 
-type Props = {};
 
 const ElevationLayout = (props: PropsWithChildren) => {
   return (

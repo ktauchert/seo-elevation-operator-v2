@@ -12,25 +12,25 @@ const AnalysisInfo = (props: Props) => {
         remarkPlugins={[remarkGfm]}
         components={{
           // Customize specific elements if needed
-          h1: ({ node, ...props }) => (
+          h1: ({ ...props }) => (
             <h1 className="text-2xl font-bold mb-2" {...props} />
           ),
-          h2: ({ node, ...props }) => (
+          h2: ({  ...props }) => (
             <h2 className="text-xl font-semibold mb-2" {...props} />
           ),
-          h3: ({ node, ...props }) => (
+          h3: ({  ...props }) => (
             <h2 className="text-xl font-semibold mt-3 mb-2" {...props} />
           ),
-          p: ({ node, ...props }) => (
+          p: ({  ...props }) => (
             <p className="text-base leading-relaxed my-2" {...props} />
           ),
-          ul: ({ node, ...props }) => (
+          ul: ({  ...props }) => (
             <ul className="list-disc pl-4 ml-5" {...props} />
           ),
-          ol: ({ node, ...props }) => (
+          ol: ({  ...props }) => (
             <ol className="list-decimal ml-5" {...props} />
           ),
-          a: ({ node, ...props }) => (
+          a: ({  ...props }) => (
             <a
               className="text-blue-500 underline hover:text-blue-700"
               {...props}

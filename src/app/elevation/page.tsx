@@ -5,14 +5,16 @@ import { useAuth } from "@/context/AuthContext";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import CreditsInfo from "@/components/CreditsInfo";
 import { IoBarChart } from "react-icons/io5";
 import CreditsSummary from "@/components/CreditsSummary";
+import { ElevationResultData } from "../../../seo_types";
+import formatFirestoreDate from "@/helper/firestore-date";
 
-type Props = {};
 
-const ElevationPage = (props: Props) => {
-  const [recentElevations, setRecentElevations] = useState<any[]>([]);
+const ElevationPage = () => {
+  const [recentElevations, setRecentElevations] = useState<
+    ElevationResultData[]
+  >([]);
   const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession();
 
@@ -28,7 +30,7 @@ const ElevationPage = (props: Props) => {
       setIsLoading(true);
       const data = await getElevations();
       if (data) {
-        setRecentElevations(data.slice(0, 5)); // Get just the 5 most recent
+        setRecentElevations(data.slice(0, 5).map(item => item.elevation)); // Extract elevation objects
       }
       setIsLoading(false);
     };
@@ -49,19 +51,6 @@ const ElevationPage = (props: Props) => {
         ) / 100
       : 0;
 
-  // Format Firestore timestamp
-  const formatFirestoreDate = (dateValue: any) => {
-    if (typeof dateValue === "string") {
-      return new Date(dateValue).toLocaleDateString("de-DE");
-    } else if (dateValue && dateValue._seconds) {
-      const date = new Date(
-        dateValue._seconds * 1000 + (dateValue._nanoseconds || 0) / 1e6
-      );
-      return date.toLocaleDateString("de-DE");
-    } else {
-      return new Date(dateValue).toLocaleDateString("de-DE");
-    }
-  };
 
   return (
     <div className="p-6 w-full text-white">

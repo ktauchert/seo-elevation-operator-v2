@@ -1,9 +1,7 @@
 "use client";
 import { useAuth } from "@/context/AuthContext";
-import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import Link from "next/link";
-import CreditsInfo from "@/components/CreditsInfo";
 import { toast } from "react-hot-toast";
 import formatFirestoreDate from "@/helper/firestore-date";
 import CreditsSummary from "@/components/CreditsSummary";
@@ -14,10 +12,8 @@ import {
   RiSettings2Line,
 } from "react-icons/ri";
 
-type Props = {};
 
-const User = (props: Props) => {
-  const { data: session, status } = useSession();
+const User = () => {
   const { userData, creditsData } = useAuth();
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 

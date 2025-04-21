@@ -90,6 +90,7 @@ export async function POST(req: NextRequest) {
               .get();
 
             elevationCount = elevationsSnapshot.size;
+            console.log('Error counting elevations:', error);
           } catch (err) {
             console.warn(`Error counting elevations for user ${userId}:`, err);
           }
@@ -107,7 +108,7 @@ export async function POST(req: NextRequest) {
           updatedAt: userData.updatedAt,
           lastLogin: 'not existing',
           elevationCount: elevationCount,
-          image: userData.image,
+          image: null,
         };
 
         // Apply filter based on role only since we're using a different status model

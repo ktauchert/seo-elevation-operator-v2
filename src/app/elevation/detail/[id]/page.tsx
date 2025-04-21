@@ -8,6 +8,7 @@ import { IoArrowBack, IoBarChart, IoClipboardOutline } from "react-icons/io5";
 import RadialChart from "@/components/RadialChart";
 import AnalysisInfo from "@/components/AnalysisInfo";
 import { ElevationResultData } from "../../../../../seo_types";
+import formatFirestoreDate from "@/helper/firestore-date";
 
 export default function ElevationDetailPage({
   params,
@@ -59,42 +60,6 @@ export default function ElevationDetailPage({
     }
   };
 
-  // Format Firestore timestamp
-  const formatFirestoreDate = (dateValue: any) => {
-    if (typeof dateValue === "string") {
-      return new Date(dateValue).toLocaleDateString("de-DE", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-    } else if (dateValue && dateValue._seconds) {
-      const date = new Date(
-        dateValue._seconds * 1000 + (dateValue._nanoseconds || 0) / 1e6
-      );
-      return date.toLocaleDateString("de-DE", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-    } else if (dateValue && dateValue.seconds) {
-      const date = new Date(
-        dateValue.seconds * 1000 + (dateValue.nanoseconds || 0) / 1e6
-      );
-      return date.toLocaleDateString("de-DE", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-    } else {
-      return new Date(dateValue).toLocaleDateString("de-DE");
-    }
-  };
 
   if (status === "loading" || isLoading) {
     return (

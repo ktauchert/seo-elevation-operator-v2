@@ -6,11 +6,11 @@ import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import DataTable from "@/components/DataTable";
 import Link from "next/link";
-import CreditsInfo from "@/components/CreditsInfo";
 import formatFirestoreDate from "@/helper/firestore-date";
+import { ElevationResultData } from "../../../../seo_types";
 
 const SummaryPage = () => {
-  const [list, setList] = useState<any[]>([]);
+  const [list, setList] = useState<ElevationResultData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { data: session } = useSession();
   const { creditsData } = useAuth();
@@ -27,14 +27,11 @@ const SummaryPage = () => {
       const elevations = await getElevations();
       if (elevations) {
         setList(
-          elevations.map((elevation: any) => ({
-            ...elevation,
-            // Keep the original timestamp for sorting
-            // updatedAt: new Date(
-            //   elevation.updatedAt._seconds * 1000 +
-            //     elevation.updatedAt._nanoseconds / 1e6
-            // ).toLocaleString(),
-          }))
+          elevations.map(
+            ({ elevation }: { elevation: ElevationResultData }) => ({
+              ...elevation,
+            })
+          )
         );
       }
       setIsLoading(false);

@@ -1,10 +1,8 @@
 "use client";
-import { useState } from "react";
+import React from "react";
 
-type Props = {};
-
-const page = (props: Props) => {
-  const [tab, setTab] = useState("impressum");
+const ImpressumPage = () => {
+  const [tab, setTab] = React.useState("impressum");
 
   const active_tab = "bg-slate-400 text-slate-900";
   const inactive_tab =
@@ -1068,4 +1066,4 @@ const page = (props: Props) => {
   );
 };
 
-export default page;
+export default ImpressumPage;

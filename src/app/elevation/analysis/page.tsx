@@ -2,22 +2,17 @@
 import AnalysisInfo from "@/components/AnalysisInfo";
 import RadialChart from "@/components/RadialChart";
 import { useSEOContext } from "@/context/SEOContext";
-import React, { useEffect } from "react";
-import CreditsInfo from "@/components/CreditsInfo";
 import Link from "next/link";
 import { IoArrowBack, IoBarChart, IoClipboardOutline } from "react-icons/io5";
 import CreditsSummary from "@/components/CreditsSummary";
-import { useAuth } from "@/context/AuthContext";
+import { useState } from "react";
+ 
 
-type Props = {};
-
-const AnalysisPage = (props: Props) => {
-  const [url, setUrl] = React.useState<string>("");
-  const { creditsData } = useAuth();
+const AnalysisPage = ( ) => {
+  const [url, setUrl] = useState<string>("");
 
   const {
     allowed,
-    message,
     progress,
     progressMessage,
     startAnalysis,
@@ -48,7 +43,7 @@ const AnalysisPage = (props: Props) => {
         <div>
           <h1 className="text-3xl font-bold">SEO Elevation Analysis</h1>
           <p className="text-gray-300 mt-2">
-            Analyze and optimize your website's SEO performance
+            Analyze and optimize your website&apos;s SEO performance
           </p>
         </div>
         <div className="flex items-center gap-4">
@@ -67,12 +62,12 @@ const AnalysisPage = (props: Props) => {
         <div className="bg-white/10 p-6 rounded-lg backdrop-blur-sm border border-cyan-800/30 ">
           <h2 className="text-xl font-semibold mb-4">Get Your Elevation</h2>
           <p className="text-gray-300 mb-6">
-            Enter your URL and hit 'Elevate' to start the analysis process.
+            Enter your URL and hit &apos;Elevate&apos; to start the analysis process.
           </p>
 
           {!allowed && (
             <div className="mb-4 p-3 bg-red-500/20 border border-red-500 rounded-md">
-              <p>You don't have enough credits to perform an analysis.</p>
+              <p>You don&apos;t have enough credits to perform an analysis.</p>
             </div>
           )}
 

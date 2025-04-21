@@ -88,7 +88,7 @@ export async function POST(req: NextRequest) {
       .doc("data");
     
     // Only allow specific fields to be updated for security
-    const allowedUpdates: Record<string, any> = {};
+    const allowedUpdates: Partial<{ role: string; status: string }> = {};
     
     if ('role' in updates) {
       allowedUpdates.role = updates.role;
