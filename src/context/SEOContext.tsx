@@ -9,7 +9,7 @@ import {
   getSEOScoring,
   saveSEOResult,
 } from "@/helper/seo-helper";
-import { ElevationResultData, SEOScoring } from "../../seo_types";
+import { SEOScoring } from "../../seo_types";
 import { useSession } from "next-auth/react";
 import { Elevation } from "@/components/DataTable";
 
@@ -30,7 +30,7 @@ interface SEOContextType {
   getElevations: (
     type?: string,
     searchFilter?: { searchKey: string; searchWord: string }
-  ) => Promise<{id:string, elevation: ElevationResultData}[] | null>;
+  ) => Promise<Elevation[] | null>;
 }
 
 // Define the progress messages and steps
@@ -65,7 +65,6 @@ const SEOProvider = (props: PropsWithChildren) => {
 
   const { creditsData, setNewCredits } = useAuth();
   const { data: session } = useSession();
-
 
   useEffect(() => {
     if (creditsData?.credits === 0) {

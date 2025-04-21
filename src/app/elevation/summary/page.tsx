@@ -4,13 +4,12 @@ import { useSEOContext } from "@/context/SEOContext";
 import { useAuth } from "@/context/AuthContext";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import DataTable from "@/components/DataTable";
+import DataTable, { Elevation } from "@/components/DataTable";
 import Link from "next/link";
 import formatFirestoreDate from "@/helper/firestore-date";
-import { ElevationResultData } from "../../../../seo_types";
 
 const SummaryPage = () => {
-  const [list, setList] = useState<ElevationResultData[]>([]);
+  const [list, setList] = useState<Elevation[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { data: session } = useSession();
   const { creditsData } = useAuth();
@@ -28,7 +27,7 @@ const SummaryPage = () => {
       if (elevations) {
         setList(
           elevations.map(
-            ({ elevation }: { elevation: ElevationResultData }) => ({
+            (elevation: Elevation) => ({
               ...elevation,
             })
           )

@@ -127,7 +127,6 @@ const LeftSideBar = () => {
                 {menuLink("/admin", "Dashboard")}
                 {menuLink("/admin/access", "Access Management")}
                 {menuLink("/admin/users", "User Management")}
-                {menuLink("/admin/statistics", "Statistics")}
               </ul>
             </div>
           )}

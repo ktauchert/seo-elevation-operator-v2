@@ -81,16 +81,15 @@ export default function AdminDashboard() {
       }
 
       const data = await response.json();
+      console.log("Dashboard data:", data);
       setStats(data);
     } catch (error) {
-      console.error("Error loading dashboard data:", error);
-      // Show a toast or notification to the user
+      console.error("Error loading access requests:", error);
+      // toast.error("Failed to load access requests");
     } finally {
       setIsLoading(false);
     }
   };
-
-
 
   return (
     <div className="p-6 w-full text-white">

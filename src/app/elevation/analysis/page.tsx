@@ -6,10 +6,11 @@ import Link from "next/link";
 import { IoArrowBack, IoBarChart, IoClipboardOutline } from "react-icons/io5";
 import CreditsSummary from "@/components/CreditsSummary";
 import { useState } from "react";
- 
+import { useAuth } from "@/context/AuthContext";
 
-const AnalysisPage = ( ) => {
+const AnalysisPage = () => {
   const [url, setUrl] = useState<string>("");
+  const { creditsData } = useAuth();
 
   const {
     allowed,
@@ -62,7 +63,8 @@ const AnalysisPage = ( ) => {
         <div className="bg-white/10 p-6 rounded-lg backdrop-blur-sm border border-cyan-800/30 ">
           <h2 className="text-xl font-semibold mb-4">Get Your Elevation</h2>
           <p className="text-gray-300 mb-6">
-            Enter your URL and hit &apos;Elevate&apos; to start the analysis process.
+            Enter your URL and hit &apos;Elevate&apos; to start the analysis
+            process.
           </p>
 
           {!allowed && (
@@ -93,7 +95,7 @@ const AnalysisPage = ( ) => {
         </div>
 
         {/* Credits Panel */}
-        <CreditsSummary creditsData={null} />
+        <CreditsSummary creditsData={creditsData} />
 
         {/* Progress Panel */}
         <div className=" bg-white/10 p-6 rounded-lg backdrop-blur-sm border border-cyan-800/30">
@@ -122,7 +124,7 @@ const AnalysisPage = ( ) => {
           <h2 className="text-xl font-semibold mb-4">SEO Analysis</h2>
 
           {seoAnalysis ? (
-            <div className="analysis-result overflow-y-auto max-h-[580px] scrollbar scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-cyan-700 scrollbar-track-slate-700/35">
+            <div className="analysis-result overflow-y-auto max-h-[730px] scrollbar scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-cyan-700 scrollbar-track-slate-700/35">
               <AnalysisInfo analysis={seoAnalysis} />
             </div>
           ) : (

@@ -5,7 +5,9 @@ import { useAuth } from "@/context/AuthContext";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { toast } from "react-hot-toast";
-import formatFirestoreDate, { FirestoreDateValue } from "@/helper/firestore-date";
+import formatFirestoreDate, {
+  FirestoreDateValue,
+} from "@/helper/firestore-date";
 
 type AccessRequest = {
   id: string;
@@ -60,7 +62,7 @@ export default function AccessManagement() {
   const loadRequests = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/admin/access", {
+      const response = await fetch("/api/access/control", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -92,7 +94,7 @@ export default function AccessManagement() {
     newStatus: "approved" | "denied"
   ) => {
     try {
-      const response = await fetch("/api/admin/access", {
+      const response = await fetch("/api/access/control", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -230,8 +232,7 @@ export default function AccessManagement() {
                           {request.email}
                         </td>
                         <td className="p-3 border-b border-cyan-800/20">
-                          {formatFirestoreDate(
-                            request.requestedAt)}
+                          {formatFirestoreDate(request.requestedAt)}
                         </td>
                         <td className="p-3 border-b border-cyan-800/20">
                           <span

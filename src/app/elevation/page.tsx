@@ -7,13 +7,12 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { IoBarChart } from "react-icons/io5";
 import CreditsSummary from "@/components/CreditsSummary";
-import { ElevationResultData } from "../../../seo_types";
 import formatFirestoreDate from "@/helper/firestore-date";
-
+import { Elevation } from "@/components/DataTable";
 
 const ElevationPage = () => {
   const [recentElevations, setRecentElevations] = useState<
-    ElevationResultData[]
+    Elevation[]
   >([]);
   const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession();
@@ -30,7 +29,9 @@ const ElevationPage = () => {
       setIsLoading(true);
       const data = await getElevations();
       if (data) {
-        setRecentElevations(data.slice(0, 5).map(item => item.elevation)); // Extract elevation objects
+        setRecentElevations(
+          data.slice(0, 5)
+        );
       }
       setIsLoading(false);
     };
@@ -50,7 +51,6 @@ const ElevationPage = () => {
             100
         ) / 100
       : 0;
-
 
   return (
     <div className="p-6 w-full text-white">

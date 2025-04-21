@@ -342,7 +342,7 @@ export default function UsersManagementPage() {
     }
 
     try {
-      const response = await fetch("/api/admin/access", {
+      const response = await fetch("/api/access/control", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -384,7 +384,7 @@ export default function UsersManagementPage() {
     }
 
     try {
-      const response = await fetch("/api/admin/access", {
+      const response = await fetch("/api/access/control", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
