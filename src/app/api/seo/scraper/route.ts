@@ -18,9 +18,10 @@ export async function POST(req: NextRequest) {
     let browser = null;
 
     if (process.env.NODE_ENV === "development") {
-      // For local development, use default puppeteer
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const puppeteerFull = require('puppeteer');
+      // For local development, use dynamic import instead of require
+      const puppeteerModule = await import('puppeteer');
+      const puppeteerFull = puppeteerModule.default;
+      
       browser = await puppeteerFull.launch({
         args: ["--no-sandbox", "--disable-setuid-sandbox"],
         headless: "new", // newer version uses "new" instead of true
@@ -31,9 +32,8 @@ export async function POST(req: NextRequest) {
       browser = await puppeteer.launch({
         args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
         defaultViewport: chromium.defaultViewport,
-        executablePath: await chromium.executablePath() || process.env.CHROMIUM_EXECUTABLE_PATH || '',
+        executablePath: await chromium.executablePath() || process.env.CHROMIUM_REVISION || '',
         headless: true,
-        // ignoreHTTPSErrors is not a valid property of LaunchOptions and has been removed
       });
     }
 
