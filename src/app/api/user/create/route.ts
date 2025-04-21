@@ -31,8 +31,6 @@ export async function POST(request: NextRequest) {
       lastLoginAt: new Date().toISOString(),
     };
 
-    console.log("Creating user:", session_user.id, userData);
-
     // Use setDoc to create or update the user document
     await setDoc(doc(db, "users", session_user.id), userData);
 

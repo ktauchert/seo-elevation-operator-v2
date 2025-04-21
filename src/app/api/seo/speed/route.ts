@@ -30,7 +30,6 @@ export async function POST(req: NextRequest) {
     }
 
     const data = await res.json();
-    console.log(data);
     return NextResponse.json({ pageSpeedData: data }, { status: 200 });
   } catch (error) {
     if (error instanceof Error && error.name === "AbortError") {

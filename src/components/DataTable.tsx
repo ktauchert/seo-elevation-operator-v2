@@ -32,7 +32,6 @@ const DataTable = ({ data }: Props) => {
     pageSize: 10, // Number of rows per page
   });
   const [globalFilter, setGlobalFilter] = useState("");
-  console.log("Elevation data:", data);
   // Define the columns for the table
   const columns = useMemo<ColumnDef<Elevation>[]>(
     () => [

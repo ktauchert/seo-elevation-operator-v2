@@ -22,7 +22,6 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    console.log("Looking up user with ID:", user_uid);
     
     // Get user data with admin SDK from users/user_uid
     const userDocRef = admin

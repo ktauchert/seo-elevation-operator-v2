@@ -25,7 +25,7 @@ export const getContent = async (url: string): Promise<string | null> => {
     });
 
     if (res.status !== 200) {
-      console.log("Failed to fetch response", res);
+      console.log("Failed to fetch response, Status: ", res.status);
       throw new Error("Failed to fetch response");
     }
     const data = await res.json();
@@ -189,7 +189,6 @@ export const saveSEOResult = async (
     }
 
     const data = await res.json();
-    console.log(data.message);
     return true;
   } catch (error) {
     console.error("Error saving SEO result", error);

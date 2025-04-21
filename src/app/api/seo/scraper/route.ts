@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import puppeteer from "puppeteer-core"; // ONLY puppeteer-core in production
+import puppeteer from "puppeteer-core";
 import chromium from "@sparticuz/chromium";
-import * as puppeteerFull from "puppeteer"; 
 
-export const maxDuration = 15;
+export const maxDuration = 30; // Increase timeout to 30 seconds
 
 export async function POST(req: NextRequest) {
   const { url } = await req.json();
@@ -13,40 +12,63 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    console.log("Starting browser launch process...");
+    console.log("Environment:", process.env.NODE_ENV);
+    
     let browser = null;
 
     if (process.env.NODE_ENV === "development") {
-      // For local development, puppeteer (full) is okay
+      // For local development, use default puppeteer
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const puppeteerFull = require('puppeteer');
       browser = await puppeteerFull.launch({
         args: ["--no-sandbox", "--disable-setuid-sandbox"],
-        headless: true, // or false if you want to see the browser
+        headless: "new", // newer version uses "new" instead of true
       });
     } else {
-      // Production environment
+      // Production environment on Vercel
+      console.log("Using @sparticuz/chromium for Vercel environment");
       browser = await puppeteer.launch({
-        args: chromium.args,
-        executablePath: await chromium.executablePath(),
-        headless: chromium.headless === "true",
+        args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath() || process.env.CHROMIUM_EXECUTABLE_PATH || '',
+        headless: true,
+        // ignoreHTTPSErrors is not a valid property of LaunchOptions and has been removed
       });
     }
 
     if (!browser) {
+      console.error("Failed to launch browser");
       return NextResponse.json(
         { error: "Failed to launch browser" },
         { status: 500 }
       );
     }
 
+    console.log("Browser launched successfully");
+    
     const page = await browser.newPage();
-    await page.goto(url, { waitUntil: "networkidle2", timeout: 15000 }); // Adjust timeout as needed
+    console.log(`Navigating to URL: ${url}`);
+    
+    await page.goto(url, { 
+      waitUntil: "networkidle2", 
+      timeout: 20000 
+    });
+    
+    console.log("Page loaded, extracting content");
     const content = await page.content();
+    
+    console.log("Closing browser");
     await browser.close();
 
     return NextResponse.json({ content }, { status: 200 });
   } catch (error) {
-    console.error("Scraping error:", error); // More descriptive error message
+    console.error("Scraping error:", error);
     return NextResponse.json(
-      { error: "Failed to scrape the content" },
+      { 
+        error: "Failed to scrape the content", 
+        details: error instanceof Error ? error.message : String(error) 
+      },
       { status: 500 }
     );
   }

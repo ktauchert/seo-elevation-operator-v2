@@ -27,8 +27,6 @@ export default function AccessManagement() {
   const { userData } = useAuth();
   const { data: session, status } = useSession();
 
-  console.log("Session", session);
-  console.log("User Data", userData);
 
   // Check if user is admin (with proper loading handling)
   useEffect(() => {

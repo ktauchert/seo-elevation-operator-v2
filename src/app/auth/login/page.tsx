@@ -47,7 +47,6 @@ export default function LoginPage() {
     const toastId = toast.loading("Submitting access request...");
 
     try {
-      console.log("Submitting access request for:", session.user.email);
       const status = await requestAccess(
         session.user.email,
         session.user.name || ""

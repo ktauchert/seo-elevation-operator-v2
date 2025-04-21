@@ -6,7 +6,6 @@ export async function GET(req: NextRequest) {
   try {
     // Check if the user is authenticated and an admin
     const user_uid = await validateTokenAndGetUserId(req);
-    console.log("User UID:", user_uid);
     if (!user_uid) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

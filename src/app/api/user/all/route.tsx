@@ -92,7 +92,7 @@ export async function POST(req: NextRequest) {
             elevationCount = elevationsSnapshot.size;
             console.log('Error counting elevations:', error);
           } catch (err) {
-            console.warn(`Error counting elevations for user ${userId}:`, err);
+            console.warn(`Error counting elevations for user:`, err);
           }
         }
 

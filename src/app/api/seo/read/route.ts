@@ -17,8 +17,6 @@ export async function POST(req: NextRequest) {
       { status: 400 }
     );
   }
-  console.log("🚀 ~ file: route.ts:20 ~ POST ~ type:", type);
-  console.log("🚀 ~ file: route.ts:20 ~ POST ~ user_uid:", user_uid);
   try {
     if (type === "all") {
       const allResults = await admin

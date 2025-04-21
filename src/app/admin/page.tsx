@@ -81,7 +81,6 @@ export default function AdminDashboard() {
       }
 
       const data = await response.json();
-      console.log("Dashboard data:", data);
       setStats(data);
     } catch (error) {
       console.error("Error loading access requests:", error);

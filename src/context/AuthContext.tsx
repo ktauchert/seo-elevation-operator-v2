@@ -36,10 +36,8 @@ const AuthContextProvider = (props: PropsWithChildren) => {
 
   useEffect(() => {
     if (status === "authenticated") {
-      console.log("Session", session);
       if (session?.user) {
         if (session.user.email && session.user.name && session.user.id) {
-          console.log("User", session.user);
           checkAndCreateUserData(session.user);
         }
       }
@@ -70,7 +68,6 @@ const AuthContextProvider = (props: PropsWithChildren) => {
 
   const requestAccess = async (email: string, displayName: string) => {
     try {
-      console.log("Requesting access for:", email);
 
       // Check if a request already exists
       const accessRef = query(
@@ -78,15 +75,10 @@ const AuthContextProvider = (props: PropsWithChildren) => {
         where("email", "==", email)
       );
 
-      console.log("Checking for existing request...");
       const snapshot = await getDocs(accessRef);
 
       if (!snapshot.empty) {
         // Request already exists, just return current status
-        console.log(
-          "Existing request found with status:",
-          snapshot.docs[0].data().status
-        );
         return snapshot.docs[0].data().status;
       }
 
@@ -134,9 +126,7 @@ const AuthContextProvider = (props: PropsWithChildren) => {
         console.error("No user ID available for API call");
         setIsProcessing(false);
         return;
-      }
-
-      console.log("Checking user data with ID:", user.id);
+      };
 
       try {
         const userExistsResponse = await fetch("/api/user/read", {
@@ -146,11 +136,9 @@ const AuthContextProvider = (props: PropsWithChildren) => {
           },
           body: JSON.stringify({ user_uid: user.id }),
         });
-        console.log("Response status:", userExistsResponse.status);
 
         if (userExistsResponse.ok) {
           const userData = await userExistsResponse.json();
-          console.log("User data exists", userData);
           setUserData(userData);
           user_data_set = true;
         } else {
@@ -161,8 +149,6 @@ const AuthContextProvider = (props: PropsWithChildren) => {
           console.error("Error response:", errorDetails);
 
           if (userExistsResponse.status === 404) {
-            // Only create if the user wasn't found (404)
-            console.log("User data does not exist, creating...");
             const createUserResponse = await fetch("/api/user/create", {
               method: "POST",
               headers: {
@@ -181,7 +167,6 @@ const AuthContextProvider = (props: PropsWithChildren) => {
 
             if (createUserResponse.ok) {
               const userData = await createUserResponse.json();
-              console.log("User data created", userData);
               setUserData(userData);
               user_data_set = true;
             } else {
@@ -217,10 +202,9 @@ const AuthContextProvider = (props: PropsWithChildren) => {
 
           if (creditsExistsResponse.ok) {
             const creditsRes = await creditsExistsResponse.json();
-            console.log("Credits exists", creditsRes.creditsData);
+          
             setCreditsData(creditsRes.creditsData);
           } else {
-            console.log("Credits does not exist, creating...");
             const createCreditsResponse = await fetch("/api/credits/create", {
               method: "POST",
               headers: {
@@ -231,7 +215,7 @@ const AuthContextProvider = (props: PropsWithChildren) => {
 
             if (createCreditsResponse.ok) {
               const credits = await createCreditsResponse.json();
-              console.log("Credits created", credits);
+
               setCreditsData(credits);
             } else {
               console.error(
@@ -271,7 +255,7 @@ const AuthContextProvider = (props: PropsWithChildren) => {
     });
     if (response.ok) {
       const credits = await response.json();
-      console.log("Credits updated", credits);
+
       setCreditsData(credits);
     } else {
       console.error("Error updating credits");
