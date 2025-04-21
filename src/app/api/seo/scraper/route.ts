@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
       
       browser = await puppeteerFull.launch({
         args: ["--no-sandbox", "--disable-setuid-sandbox"],
-        headless: "new", // newer version uses "new" instead of true
+        headless: true, // use true for headless mode
       });
     } else {
       // Production environment on Vercel

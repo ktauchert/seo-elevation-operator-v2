@@ -1,4 +1,3 @@
-
 import { Extraction, SEOScoring } from "../../seo_types";
 import {
   seoPrompt,
@@ -188,7 +187,7 @@ export const saveSEOResult = async (
       throw new Error("Failed to save SEO result");
     }
 
-    const data = await res.json();
+    // const data = await res.json();
     return true;
   } catch (error) {
     console.error("Error saving SEO result", error);
