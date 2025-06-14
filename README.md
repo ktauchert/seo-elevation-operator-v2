@@ -132,5 +132,3 @@ The software is provided "AS IS", without warranty of any kind, express or impli
 ---
 
 © 2025 SEO Elevation Operator. All rights reserved.
-
-Similar code found with 1 license type
