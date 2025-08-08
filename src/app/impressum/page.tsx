@@ -933,6 +933,17 @@ const ImpressumPage = () => {
             SSL-Verbindung verschlüsselt übertragen.
           </p>
           <br />
+          <strong>Hinweis zum Barrierefreiheitsstärkungsgesetzes (BFSG)</strong>
+          <p>
+            Diese Website dient ausschließlich als persönliches
+            Portfolio-Projekt und wird von einer Privatperson betrieben. Es
+            handelt sich nicht um ein kommerzielles Angebot oder eine
+            B2C-Dienstleistung im Sinne des Barrierefreiheitsstärkungsgesetzes
+            (BFSG). Da keine wirtschaftliche Tätigkeit vorliegt und kein Produkt
+            oder Dienstleistung am Markt angeboten wird, unterliegt diese
+            Website nicht den Anforderungen des BFSG. Dennoch bemühen wir uns,
+            die Inhalte so zugänglich wie möglich zu gestalten.
+          </p>
           <br />
           <strong>Stand: 01.12.2024</strong>
         </div>
@@ -1060,14 +1071,6 @@ const ImpressumPage = () => {
             Correct Data: Log in to your account to update your information or
             contact us for assistance. Some information may be unchangeable.
           </p>
-          <strong>Hinweis zum Barrierefreiheitsstärkungsgesetzes (BFSG)</strong>
-          <p>
-            Diese Website dient ausschließlich als persönliches Portfolio-Projekt und wird von einer Privatperson betrieben. 
-            Es handelt sich nicht um ein kommerzielles Angebot oder eine B2C-Dienstleistung im Sinne des Barrierefreiheitsstärkungsgesetzes (BFSG). 
-            Da keine wirtschaftliche Tätigkeit vorliegt und kein Produkt oder Dienstleistung am Markt angeboten wird, 
-            unterliegt diese Website nicht den Anforderungen des BFSG. Dennoch bemühen wir uns, die Inhalte so zugänglich wie möglich zu gestalten.
-          </p>
-          <br />
         </div>
       </div>
     </section>
